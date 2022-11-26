@@ -7,7 +7,9 @@ export default class UserModel extends BaseModel {
     static async getByName(name: string): Promise<User[]> {
         return await this.model.findMany({
             where: {
-                name,
+                name: {
+                    contains: name,
+                },
             },
         });
     }

@@ -3,8 +3,8 @@ import UserModel from '@root/apps/models/UseModel';
 
 @Injectable()
 export class AppService {
-  async healCheck(): Promise<string> {
+  async healCheck(): Promise<any> {
     const users = await UserModel.getByName("huy");
-    return 'Hello World!';
+    return users;
   }
 }
