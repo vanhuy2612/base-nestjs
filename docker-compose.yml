@@ -5,7 +5,7 @@ services:
         container_name: 'db'
         restart: always
         ports: 
-            - "5432:5432"
+            - "5555:5432"
         # Volumes : find folder mounts by : docker inspect <container name> -> object Mounts: [{destination: <folder to mounts>}, {}] 
         volumes: 
             - ./docker/init.sql:/docker-entrypoint-initdb.d/init-database.sql

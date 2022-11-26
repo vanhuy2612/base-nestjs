@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import UserModel from '@root/apps/models/UseModel';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
+  async healCheck(): Promise<string> {
+    const users = await UserModel.getByName("huy");
     return 'Hello World!';
   }
 }

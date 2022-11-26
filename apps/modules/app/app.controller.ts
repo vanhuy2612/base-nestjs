@@ -1,13 +1,16 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, HttpCode } from '@nestjs/common';
 import { AppService } from './app.service';
-import UserModel from '@models/UseModel';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  async getHello(): Promise<string> {
-    const users = await UserModel.getAll();
-    return this.appService.getHello();
+  async healCheck(): Promise<string> {
+    try {
+      const res = await this.appService.healCheck();
+      return res;
+    } catch (e) {
+      return "403"
+    }
   }
 }
