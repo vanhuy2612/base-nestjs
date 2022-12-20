@@ -10,6 +10,7 @@ export class AppController {
       const res = await this.appService.healCheck();
       return res;
     } catch (e) {
+      console.log(e);
       return "403"
     }
   }
