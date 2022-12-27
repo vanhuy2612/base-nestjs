@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { BaseService } from '../base/base.service';
 
 @Injectable()
-export class AppService extends BaseService {
+export class UserService extends BaseService {
 
   async healCheck(): Promise<any> {
     const allUsers = await this.prismaService.user.findMany();

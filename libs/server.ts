@@ -1,5 +1,5 @@
 import {NestFactory} from '@nestjs/core';
-import {AppModule} from '@modules/app/app.module';
+import {AppModule} from '@root/apps/modules/app.module';
 import Env from './Env';
 
 class Server {
