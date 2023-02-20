@@ -3,9 +3,9 @@ import { Module } from '@nestjs/common';
 import Env from '@root/libs/Env';
 import { PrismaModule } from '../../libs/core/database/index.module';
 import { QueueService } from './index.service';
-import { QUEUES } from './constant';
 import { LoggerModule } from '../../libs/core/logger/index.module';
 import { MailProcessor } from './mail/mail.processor';
+import { QUEUES } from './common';
 
 const queues_names: string[] = Object.keys(QUEUES);
 

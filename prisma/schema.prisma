@@ -7,18 +7,51 @@ datasource db {
   url      = env("DB_URL")
 }
 
-model User {
-  id    Int     @default(autoincrement()) @id
-  email String  @unique
-  name  String?
-  posts Post[]
+model Account {
+  id       Int     @id @default(autoincrement())
+  roleId   Int?
+  name     String?
+  email    String  @unique
+  password String?
+
+  // Relation
+  role Role? @relation("Assign-Role-To-User", fields: [roleId], references: [id], onDelete: SetNull)
+
+  @@map("accounts")
 }
 
-model Post {
-  id        Int      @default(autoincrement()) @id
-  title     String
-  content   String?
-  published Boolean? @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
+model Role {
+  id   Int     @id @default(autoincrement())
+  name String?
+  key  String
+
+  // Relation
+  accounts         Account[]         @relation("Assign-Role-To-User")
+  grantPermissions GrantPermission[] @relation("Assign-Role-To-Grant")
+
+  @@map("roles")
+}
+
+model Permission {
+  id   Int     @id @default(autoincrement())
+  name String?
+  key  String
+
+  // Relation
+  grantPermissions GrantPermission[] @relation("Assign-Permission-To-Grant")
+
+  @@map("permissions")
+}
+
+model GrantPermission {
+  id           Int     @id @default(autoincrement())
+  roleId       Int
+  permissionId Int
+  active       Boolean @default(true)
+
+  // Relation
+  role       Role       @relation("Assign-Role-To-Grant", fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation("Assign-Permission-To-Grant", fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@map("grant_permissions")
 }

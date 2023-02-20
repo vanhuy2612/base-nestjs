@@ -16,7 +16,7 @@ describe('UserController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      expect(userController.healCheck()).toBe('Hello World!');
+      expect(userController.index()).toBe('Hello World!');
     });
   });
 });

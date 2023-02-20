@@ -2,7 +2,7 @@ import { InjectQueue } from '@nestjs/bull';
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Queue } from 'bull';
 import { PrismaService } from '../../libs/core/database/index.service';
-import { QUEUES } from './constant';
+import { QUEUES } from './common';
 
 @Injectable()
 export class QueueService implements OnModuleInit {

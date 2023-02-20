@@ -23,6 +23,7 @@
       "@libs/*": ["./libs/*"],
       "@models/*": ["./apps/models/*"],
       "@modules/*": ["./apps/modules/*"],
+      "@ext_libs/*": ["./build/Release/*"],
     }
   }
 }

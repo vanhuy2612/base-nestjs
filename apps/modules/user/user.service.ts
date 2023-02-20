@@ -1,18 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { QUEUE_PROCESS } from '@root/apps/queue/constant';
+import { QUEUE_PROCESS } from '@root/apps/queue/common';
+import { APIException } from '@root/libs/core/exception/APIException';
 import { BaseService } from '../base/base.service';
 
 @Injectable()
 export class UserService extends BaseService {
 
-  async healCheck(): Promise<any> {
-    // const allUsers = await this.prismaService.user.findMany();
-    // this.loggerService.log('info', allUsers);
-    await this.queueService.mailQueue.add(QUEUE_PROCESS.SEND_MAIL, {
-      data: 1,
-    });
+  async index(): Promise<any> {
+    throw new APIException(3000, "List User Not Found.");
     return {
-      // allUsers,
+      allUsers: [1, 2, 3],
     };
+  }
+
+  async edit(): Promise<any> {
+    return {
+      success: true,
+    }
   }
 }
