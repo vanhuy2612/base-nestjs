@@ -12,11 +12,12 @@ DoSomethingUseful(napi_env env, napi_callback_info info)
 napi_value create_addon(napi_env env)
 {
     napi_value result;
+    napi_value version;
     NAPI_CALL(env, napi_create_object(env, &result));
-
+    NAPI_CALL(env, napi_create_double(env, 1.1, &version));
     napi_value exported_function;
     NAPI_CALL(env, napi_create_function(env,
-                                        "doSomethingUseful",
+                                        "exec",
                                         NAPI_AUTO_LENGTH,
                                         DoSomethingUseful,
                                         NULL,
@@ -24,9 +25,12 @@ napi_value create_addon(napi_env env)
 
     NAPI_CALL(env, napi_set_named_property(env,
                                            result,
-                                           "doSomethingUseful",
+                                           "exec",
                                            exported_function));
-
+    NAPI_CALL(env, napi_set_named_property(env,
+                                           result,
+                                           "version",
+                                           version));
     return result;
 }
 
