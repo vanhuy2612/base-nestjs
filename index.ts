@@ -1,10 +1,10 @@
-import Server from "./libs/server";
-import { exec } from "child_process";
-import * as moment from 'moment';
+// import Server from "@root/libs/server";
+// import { ClusterService } from '@root/libs/core/cluster';
+// import { exec } from "child_process";
 
 const a = require('./build/Release/ex_util.node');
 // const server = new Server();
-// server.start();
+// ClusterService.register(server.start);
 
 // console.log("Process path: ", process.execPath);
 // const platform: NodeJS.Platform = process.platform;

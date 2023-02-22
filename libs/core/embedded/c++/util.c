@@ -1,9 +1,8 @@
-// addon_node.c
 #include <node_api.h>
 #include "common.h"
 
 static napi_value
-DoSomethingUseful(napi_env env, napi_callback_info info)
+exec(napi_env env, napi_callback_info info)
 {
     // Do something useful.
     return NULL;
@@ -19,7 +18,7 @@ napi_value create_addon(napi_env env)
     NAPI_CALL(env, napi_create_function(env,
                                         "exec",
                                         NAPI_AUTO_LENGTH,
-                                        DoSomethingUseful,
+                                        exec,
                                         NULL,
                                         &exported_function));
 
