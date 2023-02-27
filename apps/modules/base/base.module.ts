@@ -5,7 +5,9 @@ import { AuthModule } from '@root/apps/modules/auth/auth.module';
 import { PrismaModule } from '@root/libs/core/database/index.module';
 import { LoggerModule } from '@root/libs/core/logger/index.module';
 import { QueueModule } from '@root/apps/queue/index.module';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+
 @Module({
   imports: [
     UserModule,
@@ -14,9 +16,10 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
     LoggerModule,
     QueueModule,
     JwtModule,
+    EventEmitterModule,
   ],
   controllers: [],
   providers: [BaseService],
   exports: [BaseService],
 })
-export class BaseModule { }
+export class BaseModule {}

@@ -20,15 +20,14 @@ const queues_names: string[] = Object.keys(QUEUES);
       },
     }),
     // Register queue
-    ...queues_names.map(queue => BullModule.registerQueue({
-      name: queue,
-    })),
+    ...queues_names.map((queue) =>
+      BullModule.registerQueue({
+        name: queue,
+      }),
+    ),
   ],
   controllers: [],
   providers: [QueueService, MailProcessor],
   exports: [QueueService, MailProcessor],
 })
-
-export class QueueModule {
-
-}
+export class QueueModule {}

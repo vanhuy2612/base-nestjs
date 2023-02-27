@@ -1,6 +1,6 @@
-import { Account } from "@prisma/client";
-import { Request } from "express";
+import { Account } from '@prisma/client';
+import { Request } from 'express';
 
 export interface RequestT extends Request {
-    auth?: Account & { permissions: string[] };
+  auth?: Account & { permissions: string[] };
 }

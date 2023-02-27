@@ -1,24 +1,33 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
 import { LoginRequestBody } from './auth';
 import { AuthService } from './auth.service';
+import { ResponseInterceptor } from '@root/libs/core/interceptor/response.interceptor';
+import { ExceptionInterceptor } from '@root/libs/core/interceptor/exception.interceptor';
+
+type LoginResponseT = {
+  [key in string]: any;
+};
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
-    @Post('login')
-    async login(
-        @Body() params: LoginRequestBody,
-    ): Promise<any> {
-        try {
-            const res = await this.authService.login(params);
-            return res;
-        } catch (e) {
-            console.log(e);
-            return {
-                code: 401,
-                message: "Username or password isn't correct.",
-            }
-        }
+  @Post('login')
+  @UseInterceptors(ResponseInterceptor, ExceptionInterceptor)
+  async login(@Body() params: LoginRequestBody): Promise<any> {
+    try {
+      const res = await this.authService.login(params);
+      return res;
+    } catch (e) {
+      console.log(e);
+      throw e;
     }
+  }
 }

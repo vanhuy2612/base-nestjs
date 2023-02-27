@@ -6,13 +6,9 @@ import { QUEUES } from './common';
 
 @Injectable()
 export class QueueService implements OnModuleInit {
-
-  constructor(
-    @InjectQueue(QUEUES.MAIL) readonly mailQueue: Queue,
-  ) { }
+  constructor(@InjectQueue(QUEUES.MAIL) readonly mailQueue: Queue) {}
 
   async onModuleInit() {
-    console.log("************ Queue is running ******************");
+    console.log('************ Queue is running ******************');
   }
-
 }

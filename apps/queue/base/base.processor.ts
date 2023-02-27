@@ -9,20 +9,29 @@ export class BaseProcessor {
   constructor(
     readonly prismaService: PrismaService,
     readonly loggerService: LoggerService,
-  ) { }
+  ) {}
 
   @OnQueueActive()
   onActive(job: Job) {
-    console.log(`Processing job ${job.id} of type ${job.name} with data `, job.data);
+    console.log(
+      `Processing job ${job.id} of type ${job.name} with data `,
+      job.data,
+    );
   }
 
   @OnQueueRemoved()
   onRemoved(job: Job) {
-    console.log(`Removed job ${job.id} of type ${job.name} with data `, job.data);
+    console.log(
+      `Removed job ${job.id} of type ${job.name} with data `,
+      job.data,
+    );
   }
 
   @OnQueueCompleted()
   onCompleted(job: Job) {
-    console.log(`Completed job ${job.id} of type ${job.name} with data `, job.data);
+    console.log(
+      `Completed job ${job.id} of type ${job.name} with data `,
+      job.data,
+    );
   }
 }

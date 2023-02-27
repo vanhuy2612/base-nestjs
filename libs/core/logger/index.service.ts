@@ -4,12 +4,12 @@ import { PrismaClient } from '@prisma/client';
 @Injectable()
 export class LoggerService implements OnModuleInit {
   async onModuleInit() {
-    console.log("************ Logger is running ******************");
+    console.log('************ Logger is running ******************');
   }
 
   /**
- * Write a 'log' level log.
- */
+   * Write a 'log' level log.
+   */
   log(message: any, ...optionalParams: any[]) {
     console.log(message, ...optionalParams);
   }
@@ -41,5 +41,4 @@ export class LoggerService implements OnModuleInit {
   verbose?(message: any, ...optionalParams: any[]) {
     console.log(message, ...optionalParams);
   }
-
 }

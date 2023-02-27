@@ -3,7 +3,7 @@ import { PrismaService } from '@libs/core/database/index.service';
 import { LoggerService } from '@root/libs/core/logger/index.service';
 import { QueueService } from '@root/apps/queue/index.service';
 import { JwtService } from '@nestjs/jwt';
-import { Auth } from '../auth/auth';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class BaseService {
@@ -12,6 +12,6 @@ export class BaseService {
     readonly loggerService: LoggerService,
     readonly queueService: QueueService,
     readonly jwtService: JwtService,
-  ) { }
-
+    readonly eventEmitter: EventEmitter2,
+  ) {}
 }

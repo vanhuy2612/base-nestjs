@@ -7,16 +7,9 @@ import { PingCronjob } from './ping/ping.cron';
 import { LoggerModule } from '../../libs/core/logger/index.module';
 
 @Module({
-  imports: [
-    PrismaModule,
-    LoggerModule,
-    ScheduleModule.forRoot(),
-  ],
+  imports: [PrismaModule, LoggerModule, ScheduleModule.forRoot()],
   controllers: [],
   providers: [CronjobService, PingCronjob],
   exports: [CronjobService, PingCronjob],
 })
-
-export class CronjobModule {
-
-}
+export class CronjobModule {}
