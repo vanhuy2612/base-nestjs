@@ -3,7 +3,7 @@
     {
       "target_name": "ex_util",
       "sources": [
-        "libs/core/embedded/c++/util.c"
+        "apps/embedded/c++/util.c"
       ]
     },
   ],

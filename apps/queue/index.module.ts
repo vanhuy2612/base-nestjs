@@ -1,5 +1,5 @@
 import { BullModule } from '@nestjs/bull';
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import Env from '@root/libs/Env';
 import { PrismaModule } from '../../libs/core/database/index.module';
 import { QueueService } from './index.service';
@@ -8,7 +8,7 @@ import { MailProcessor } from './mail/mail.processor';
 import { QUEUES } from './common';
 
 const queues_names: string[] = Object.keys(QUEUES);
-
+@Global()
 @Module({
   imports: [
     PrismaModule,

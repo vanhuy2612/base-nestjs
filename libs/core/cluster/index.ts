@@ -10,7 +10,7 @@ export class ClusterService {
    * @param numCPUs
    * @param cb
    */
-  static register(cb): void {
+  static register(cb: any): void {
     if (process.env.NODE_ENV === 'development') {
       cb();
     } else {

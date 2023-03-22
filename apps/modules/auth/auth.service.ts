@@ -7,9 +7,24 @@ import { LoginRequestBody } from './auth';
 import { EVENT_NAMES } from '@root/apps/events/common';
 import UserLoginEvent from '@root/apps/events/model/UserLoginEvent';
 import { APIException } from '@root/libs/core/exception/APIException';
+import { PrismaService } from '@root/libs/core/database/index.service';
+import { LoggerService } from '@root/libs/core/logger/index.service';
+import { QueueService } from '@root/apps/queue/index.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService extends BaseService {
+  constructor(
+    readonly prismaService: PrismaService,
+    readonly loggerService: LoggerService,
+    readonly queueService: QueueService,
+    readonly jwtService: JwtService,
+    readonly eventEmitter: EventEmitter2,
+  ) {
+    super(prismaService, loggerService, queueService, jwtService, eventEmitter);
+  }
+
   async login(params: LoginRequestBody): Promise<any> {
     const { username, password } = params;
     const account: AccountT | null = await this.prismaService.account.findFirst(
