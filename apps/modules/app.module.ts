@@ -17,6 +17,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { EventModule } from '@root/apps/events/index.module';
 
 import Env from '@root/libs/Env';
+import { Client, ClientKafka, Transport } from '@nestjs/microservices';
+import { config as kafkaConfig } from '@root/libs/core/kafka/config';
 
 ConfigModule.forRoot();
 @Module({
@@ -70,4 +72,20 @@ export class AppModule implements NestModule {
       .apply(AuthMiddleware, PermissionMiddleware('users.delete'))
       .forRoutes({ path: 'users/:id', method: RequestMethod.DELETE });
   }
+
+  @Client({
+    transport: Transport.KAFKA,
+    options: {
+      client: {
+        clientId: 'kafkaSample',
+        brokers: [
+          `${kafkaConfig.host}:${kafkaConfig.port}`,
+        ],
+      },
+      consumer: {
+        groupId: kafkaConfig.groupId, // Should be the same thing we give in consumer
+      },
+    },
+  })
+  client: ClientKafka;
 }

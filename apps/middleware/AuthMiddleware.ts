@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import Env from '@root/libs/Env';
-import { Auth } from '../modules/auth/auth';
+import { Auth } from '../modules/auth/common';
 import { BaseMiddleware } from './BaseMiddleware';
 import { to } from 'await-to-js';
 import { RequestT } from '@root/libs/core/request';

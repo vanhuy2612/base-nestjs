@@ -1,7 +1,11 @@
 {
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
   "compilerOptions": {
     "rootDir": "./",
-    "module": "commonjs",
+    "module": "CommonJS",
+    "moduleResolution": "node",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -25,6 +29,9 @@
       "@modules/*": ["./apps/modules/*"],
       "@ext_libs/*": ["./build/Release/*"],
     },
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowArbitraryExtensions": true,
+    "allowJs": true
   }
 }

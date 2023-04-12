@@ -6,7 +6,7 @@ import {
   Post,
   UseInterceptors,
 } from '@nestjs/common';
-import { LoginRequestBody } from './auth';
+import { LoginRequestBody } from './common';
 import { AuthService } from './auth.service';
 import { ResponseInterceptor } from '@root/libs/core/interceptor/response.interceptor';
 import { ExceptionInterceptor } from '@root/libs/core/interceptor/exception.interceptor';
@@ -17,7 +17,7 @@ type LoginResponseT = {
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post('login')
   @UseInterceptors(ResponseInterceptor, ExceptionInterceptor)

@@ -1,9 +1,9 @@
 import { Injectable, UseInterceptors } from '@nestjs/common';
 import { Permission } from '@prisma/client';
-import { AccountT } from '@root/libs/core/database';
+import { AccountT } from '@root/libs/core/database/common';
 import Env from '@root/libs/Env';
 import { BaseService } from '../base/base.service';
-import { LoginRequestBody } from './auth';
+import { LoginRequestBody } from './common';
 import { EVENT_NAMES } from '@root/apps/events/common';
 import UserLoginEvent from '@root/apps/events/model/UserLoginEvent';
 import { APIException } from '@root/libs/core/exception/APIException';

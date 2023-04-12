@@ -3,7 +3,8 @@
     {
       "target_name": "ex_util",
       "sources": [
-        "apps/embedded/c++/util.c"
+        "apps/embedded/c++/util.c",
+        "apps/embedded/c++/common.h"
       ]
     },
   ],

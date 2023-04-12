@@ -1,7 +1,7 @@
 import { RequestT } from '@root/libs/core/request';
 import { ResponseT } from '@root/libs/core/response';
 import { NextFunction } from 'express';
-import { Auth } from '../modules/auth/auth';
+import { Auth } from '../modules/auth/common';
 
 export const PermissionMiddleware = (permission: string) => {
   return (req: RequestT, res: ResponseT, next: NextFunction) => {
