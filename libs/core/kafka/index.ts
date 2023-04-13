@@ -24,5 +24,6 @@ export class KafkaMicroservice {
                 },
             },
         );
+        console.log("Kafka is running on ", `${kafkaConfig.host}:${kafkaConfig.port}`);
     }
 }

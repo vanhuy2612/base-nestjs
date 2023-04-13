@@ -10,6 +10,7 @@ import { LoginRequestBody } from './common';
 import { AuthService } from './auth.service';
 import { ResponseInterceptor } from '@root/libs/core/interceptor/response.interceptor';
 import { ExceptionInterceptor } from '@root/libs/core/interceptor/exception.interceptor';
+import { MessagePattern } from '@nestjs/microservices';
 
 type LoginResponseT = {
   [key in string]: any;
@@ -29,5 +30,10 @@ export class AuthController {
       console.log(e);
       throw e;
     }
+  }
+
+  @MessagePattern('user_login')
+  handleUserLogin(data: any) {
+    console.log("Data from handle user login", data);
   }
 }

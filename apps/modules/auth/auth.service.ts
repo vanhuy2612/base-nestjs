@@ -1,4 +1,4 @@
-import { Injectable, UseInterceptors } from '@nestjs/common';
+import { Inject, Injectable, UseInterceptors } from '@nestjs/common';
 import { Permission } from '@prisma/client';
 import { AccountT } from '@root/libs/core/database/common';
 import Env from '@root/libs/Env';
@@ -12,6 +12,7 @@ import { LoggerService } from '@root/libs/core/logger/index.service';
 import { QueueService } from '@root/apps/queue/index.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { JwtService } from '@nestjs/jwt';
+import { ClientKafka } from '@nestjs/microservices';
 
 @Injectable()
 export class AuthService extends BaseService {
@@ -21,6 +22,7 @@ export class AuthService extends BaseService {
     readonly queueService: QueueService,
     readonly jwtService: JwtService,
     readonly eventEmitter: EventEmitter2,
+    @Inject('AUTH_MICROSERVICE') private readonly kafkaCli: ClientKafka,
   ) {
     super(prismaService, loggerService, queueService, jwtService, eventEmitter);
   }
@@ -53,10 +55,12 @@ export class AuthService extends BaseService {
       });
     }
 
-    await this.eventEmitter.emit(
+    this.eventEmitter.emit(
       EVENT_NAMES.USER_LOGIN,
       new UserLoginEvent(username),
     );
+
+    this.kafkaCli.emit('user_login', JSON.stringify({ account }));
 
     return {
       token: this.jwtService.sign(
