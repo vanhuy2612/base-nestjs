@@ -1,14 +1,10 @@
-export class APIException extends Error {
-    code: number;
-    message: string;
-    data: any;
-    error: any;
+import { HttpException, HttpStatus } from "@nestjs/common";
+import { ErrorMessageKey } from "./lang";
 
-    constructor(code: number, message: string, data?: any, error?: any) {
-        super();
-        this.code = code;
-        this.message = message;
+export class APIException extends HttpException {
+    data: any;
+    constructor(status: HttpStatus, message: string | ErrorMessageKey | Record<string, any>, data?: any) {
+        super(message, status);
         this.data = data;
-        this.error = error;
     }
 }

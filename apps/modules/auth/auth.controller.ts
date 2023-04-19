@@ -1,34 +1,44 @@
 import {
   Body,
   Controller,
-  Get,
-  HttpCode,
+  Inject,
   Post,
-  UseInterceptors,
+  Req,
+  Res,
 } from '@nestjs/common';
 import { LoginRequestBody } from './common';
 import { AuthService } from './auth.service';
-import { ResponseInterceptor } from '@root/libs/core/interceptor/response.interceptor';
-import { ExceptionInterceptor } from '@root/libs/core/interceptor/exception.interceptor';
-import { MessagePattern } from '@nestjs/microservices';
-
-type LoginResponseT = {
-  [key in string]: any;
-};
+import { ClientKafka, MessagePattern } from '@nestjs/microservices';
+import { Exception } from '@root/libs/core/exception/Exception';
+import { RequestT } from '@root/libs/core/request';
+import { LoginResponse } from '@root/apps/dto/response';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(
+    private readonly authService: AuthService,
+    @Inject('AUTH_MICROSERVICE') private readonly kafkaCli: ClientKafka,
+  ) { }
+
+  async onModuleInit() {
+    ['user_login'].forEach((key) => this.kafkaCli.subscribeToResponseOf(`${key}`));
+    await this.kafkaCli.connect();
+  }
+
+  async onModuleDestroy() {
+    await this.kafkaCli.close();
+  }
 
   @Post('login')
-  @UseInterceptors(ResponseInterceptor, ExceptionInterceptor)
-  async login(@Body() params: LoginRequestBody): Promise<any> {
+  async login(
+    @Body() params: LoginRequestBody,
+    @Req() req: RequestT,
+  ): Promise<LoginResponse> {
     try {
       const res = await this.authService.login(params);
       return res;
     } catch (e) {
-      console.log(e);
-      throw e;
+      await Exception.handle(req, e);
     }
   }
 

@@ -1,4 +1,4 @@
-import { Inject, Injectable, UseInterceptors } from '@nestjs/common';
+import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { Permission } from '@prisma/client';
 import { AccountT } from '@root/libs/core/database/common';
 import Env from '@root/libs/Env';
@@ -13,6 +13,8 @@ import { QueueService } from '@root/apps/queue/index.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { JwtService } from '@nestjs/jwt';
 import { ClientKafka } from '@nestjs/microservices';
+import { ErrorMessageKey } from '@root/libs/core/exception/lang';
+import { LoginResponse } from '@root/apps/dto/response';
 
 @Injectable()
 export class AuthService extends BaseService {
@@ -27,7 +29,7 @@ export class AuthService extends BaseService {
     super(prismaService, loggerService, queueService, jwtService, eventEmitter);
   }
 
-  async login(params: LoginRequestBody): Promise<any> {
+  async login(params: LoginRequestBody): Promise<LoginResponse> {
     const { username, password } = params;
     const account: AccountT | null = await this.prismaService.account.findFirst(
       {
@@ -39,7 +41,7 @@ export class AuthService extends BaseService {
         },
       },
     );
-    if (!account) throw new APIException(404, 'ACCOUNT_NOT_FOUND', {});
+    if (!account) throw new APIException(HttpStatus.NOT_FOUND, ErrorMessageKey.UNKNOWN);
     let permissions: Permission[];
     if (account.role.key === 'root') {
       permissions = await this.prismaService.permission.findMany();
@@ -62,7 +64,7 @@ export class AuthService extends BaseService {
 
     this.kafkaCli.emit('user_login', JSON.stringify({ account }));
 
-    return {
+    console.log("Logged in...", {
       token: this.jwtService.sign(
         {
           ...account,
@@ -74,6 +76,22 @@ export class AuthService extends BaseService {
         },
       ),
       permissions: permissions.map((permission) => permission.key),
+    });
+    return {
+      status: HttpStatus.OK,
+      data: {
+        token: this.jwtService.sign(
+          {
+            ...account,
+            permissions: permissions.map((permission) => permission.key),
+          },
+          {
+            secret: Env.get('JWT_SECRET', 'nguoianhmuonquen'),
+            expiresIn: '1h',
+          },
+        ),
+        permissions: permissions.map((permission) => permission.key),
+      }
     };
   }
 }
