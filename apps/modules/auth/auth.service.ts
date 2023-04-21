@@ -12,9 +12,10 @@ import { LoggerService } from '@root/libs/core/logger/index.service';
 import { QueueService } from '@root/apps/queue/index.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { JwtService } from '@nestjs/jwt';
-import { ClientKafka } from '@nestjs/microservices';
 import { ErrorMessageKey } from '@root/libs/core/exception/lang';
 import { LoginResponse } from '@root/apps/dto/response';
+import { KafkaMicroservice } from '@root/apps/kafka/index.service';
+import { TOPIC } from '@root/apps/kafka/common';
 
 @Injectable()
 export class AuthService extends BaseService {
@@ -24,7 +25,7 @@ export class AuthService extends BaseService {
     readonly queueService: QueueService,
     readonly jwtService: JwtService,
     readonly eventEmitter: EventEmitter2,
-    @Inject('AUTH_MICROSERVICE') private readonly kafkaCli: ClientKafka,
+    readonly kafkaCli: KafkaMicroservice,
   ) {
     super(prismaService, loggerService, queueService, jwtService, eventEmitter);
   }
@@ -62,21 +63,8 @@ export class AuthService extends BaseService {
       new UserLoginEvent(username),
     );
 
-    this.kafkaCli.emit('user_login', JSON.stringify({ account }));
+    this.kafkaCli.client.emit(TOPIC.USER_LOGIN, JSON.stringify({ account }));
 
-    console.log("Logged in...", {
-      token: this.jwtService.sign(
-        {
-          ...account,
-          permissions: permissions.map((permission) => permission.key),
-        },
-        {
-          secret: Env.get('JWT_SECRET', 'nguoianhmuonquen'),
-          expiresIn: '1h',
-        },
-      ),
-      permissions: permissions.map((permission) => permission.key),
-    });
     return {
       status: HttpStatus.OK,
       data: {

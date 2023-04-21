@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { LoginRequestBody } from './common';
 import { AuthService } from './auth.service';
-import { ClientKafka, MessagePattern } from '@nestjs/microservices';
+import { MessagePattern } from '@nestjs/microservices';
 import { Exception } from '@root/libs/core/exception/Exception';
 import { RequestT } from '@root/libs/core/request';
 import { LoginResponse } from '@root/apps/dto/response';
@@ -17,17 +17,7 @@ import { LoginResponse } from '@root/apps/dto/response';
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    @Inject('AUTH_MICROSERVICE') private readonly kafkaCli: ClientKafka,
   ) { }
-
-  async onModuleInit() {
-    ['user_login'].forEach((key) => this.kafkaCli.subscribeToResponseOf(`${key}`));
-    await this.kafkaCli.connect();
-  }
-
-  async onModuleDestroy() {
-    await this.kafkaCli.close();
-  }
 
   @Post('login')
   async login(

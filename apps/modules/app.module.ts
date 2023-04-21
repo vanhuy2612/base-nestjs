@@ -15,6 +15,7 @@ import { PermissionMiddleware } from '../middleware/PermissionMiddleware';
 import { JwtModule } from '@nestjs/jwt';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { EventModule } from '@root/apps/events/index.module';
+import { KafkaModule } from '@root/apps/kafka/index.module';
 
 import Env from '@root/libs/Env';
 
@@ -26,6 +27,7 @@ ConfigModule.forRoot();
     CronjobModule,
     QueueModule,
     LoggerModule,
+    KafkaModule,
     JwtModule.register({
       secret: Env.get('JWT_SECRET', 'nguoianhmuonquen'),
       signOptions: { expiresIn: '120s' },
