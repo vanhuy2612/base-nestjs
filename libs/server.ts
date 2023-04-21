@@ -3,8 +3,6 @@ import { AppModule } from '@root/apps/modules/app.module';
 import Env from './Env';
 import { RedisMicroservice } from '@root/libs/core/redis';
 import { CustomExceptionFilter } from './core/exception/CustomExceptionFilter';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { config } from '@root/libs/core/kafka/config';
 import { KafkaMicroservice } from './core/kafka';
 
 class Server {

@@ -16,6 +16,7 @@ import { ErrorMessageKey } from '@root/libs/core/exception/lang';
 import { LoginResponse } from '@root/apps/dto/response';
 import { KafkaService } from '@root/libs/core/kafka/index.service';
 import { TOPIC } from '@root/libs/core/kafka/common';
+import { QUEUE_PROCESS } from '@root/apps/queue/common';
 
 @Injectable()
 export class AuthService extends BaseService {
@@ -64,7 +65,9 @@ export class AuthService extends BaseService {
     );
 
     this.kafkaCli.client.emit(TOPIC.USER_LOGIN, JSON.stringify({ account }));
-    this.queueService.mailQueue.add(account);
+    await this.queueService.mailQueue.add(QUEUE_PROCESS.SEND_MAIL, {
+      account,
+    });
     return {
       status: HttpStatus.OK,
       data: {
