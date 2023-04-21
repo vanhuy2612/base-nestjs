@@ -15,7 +15,7 @@ export class UserListener extends BaseListener {
     try {
       console.log('User is logining ...', event.username);
       const users = await this.prismaService.account.findMany();
-      console.log('From Event Emmiter, ', users);
+      console.log('From Event Emmiter, ', users.length);
     } catch (e) {
       this.loggerService.error(`%s is fail.`, EVENT_NAMES.USER_LOGIN);
     }

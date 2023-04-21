@@ -14,8 +14,8 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { JwtService } from '@nestjs/jwt';
 import { ErrorMessageKey } from '@root/libs/core/exception/lang';
 import { LoginResponse } from '@root/apps/dto/response';
-import { KafkaMicroservice } from '@root/apps/kafka/index.service';
-import { TOPIC } from '@root/apps/kafka/common';
+import { KafkaService } from '@root/libs/core/kafka/index.service';
+import { TOPIC } from '@root/libs/core/kafka/common';
 
 @Injectable()
 export class AuthService extends BaseService {
@@ -25,7 +25,7 @@ export class AuthService extends BaseService {
     readonly queueService: QueueService,
     readonly jwtService: JwtService,
     readonly eventEmitter: EventEmitter2,
-    readonly kafkaCli: KafkaMicroservice,
+    readonly kafkaCli: KafkaService,
   ) {
     super(prismaService, loggerService, queueService, jwtService, eventEmitter);
   }
@@ -64,7 +64,7 @@ export class AuthService extends BaseService {
     );
 
     this.kafkaCli.client.emit(TOPIC.USER_LOGIN, JSON.stringify({ account }));
-
+    this.queueService.mailQueue.add(account);
     return {
       status: HttpStatus.OK,
       data: {

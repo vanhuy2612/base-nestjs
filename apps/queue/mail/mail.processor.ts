@@ -13,14 +13,6 @@ export class MailProcessor extends BaseProcessor {
     const allUsers = await this.prismaService.account.findMany();
     console.log('After get all');
     this.loggerService.log('Mail Consumer', allUsers);
-    await this.prismaService.account.update({
-      where: {
-        id: 1,
-      },
-      data: {
-        name: 'HuyDV3',
-      },
-    });
     return true;
   }
 }

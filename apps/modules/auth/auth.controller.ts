@@ -8,10 +8,11 @@ import {
 } from '@nestjs/common';
 import { LoginRequestBody } from './common';
 import { AuthService } from './auth.service';
-import { MessagePattern } from '@nestjs/microservices';
+import { Ctx, EventPattern, KafkaContext, MessagePattern, Payload } from '@nestjs/microservices';
 import { Exception } from '@root/libs/core/exception/Exception';
 import { RequestT } from '@root/libs/core/request';
 import { LoginResponse } from '@root/apps/dto/response';
+import { TOPIC } from '@root/libs/core/kafka/common';
 
 @Controller('auth')
 export class AuthController {
@@ -32,8 +33,8 @@ export class AuthController {
     }
   }
 
-  @MessagePattern('user_login')
-  handleUserLogin(data: any) {
-    console.log("Data from handle user login", data);
+  @EventPattern(TOPIC.USER_LOGIN)
+  async handle(@Payload() message: any, @Ctx() context: KafkaContext) {
+    console.log(`Auth Controller Data from consumer ${TOPIC.USER_LOGIN} `, message, context.getTopic());
   }
 }

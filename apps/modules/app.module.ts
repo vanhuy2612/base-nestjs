@@ -15,7 +15,7 @@ import { PermissionMiddleware } from '../middleware/PermissionMiddleware';
 import { JwtModule } from '@nestjs/jwt';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { EventModule } from '@root/apps/events/index.module';
-import { KafkaModule } from '@root/apps/kafka/index.module';
+import { KafkaModule } from '@root/libs/core/kafka/index.module';
 
 import Env from '@root/libs/Env';
 

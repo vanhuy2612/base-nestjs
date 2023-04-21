@@ -1,7 +1,6 @@
 import { Global, Module } from '@nestjs/common';
-import { KafkaMicroservice } from './index.service';
+import { KafkaService } from './index.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AuthConsumer } from './consumer/auth.consumer';
 import { config } from './config';
 
 @Global()
@@ -24,7 +23,7 @@ import { config } from './config';
         ]),
     ],
     controllers: [],
-    providers: [KafkaMicroservice, AuthConsumer,],
-    exports: [KafkaMicroservice, AuthConsumer,],
+    providers: [KafkaService,],
+    exports: [KafkaService,],
 })
 export class KafkaModule { }
