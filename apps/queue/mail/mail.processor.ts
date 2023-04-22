@@ -9,10 +9,8 @@ export class MailProcessor extends BaseProcessor {
   async handle(job: Job<unknown>) {
     console.log('JOB ID:', job.id);
     console.log('Start handling...');
-    console.log(this.loggerService);
     const allUsers = await this.prismaService.account.findMany();
     console.log('After get all');
-    this.loggerService.log('Mail Consumer', allUsers);
     return true;
   }
 }

@@ -15,7 +15,6 @@ export class BaseProcessor {
   onActive(job: Job) {
     console.log(
       `Processing job ${job.id} of type ${job.name} with data `,
-      job.data,
     );
   }
 
@@ -23,7 +22,6 @@ export class BaseProcessor {
   onRemoved(job: Job) {
     console.log(
       `Removed job ${job.id} of type ${job.name} with data `,
-      job.data,
     );
   }
 
@@ -31,7 +29,6 @@ export class BaseProcessor {
   onCompleted(job: Job) {
     console.log(
       `Completed job ${job.id} of type ${job.name} with data `,
-      job.data,
     );
   }
 }

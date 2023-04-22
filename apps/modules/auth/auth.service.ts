@@ -3,7 +3,6 @@ import { Permission } from '@prisma/client';
 import { AccountT } from '@root/libs/core/database/common';
 import Env from '@root/libs/Env';
 import { BaseService } from '../base/base.service';
-import { LoginRequestBody } from './common';
 import { EVENT_NAMES } from '@root/apps/events/common';
 import UserLoginEvent from '@root/apps/events/model/UserLoginEvent';
 import { APIException } from '@root/libs/core/exception/APIException';
@@ -17,6 +16,7 @@ import { LoginResponse } from '@root/apps/dto/response';
 import { KafkaService } from '@root/libs/core/kafka/index.service';
 import { TOPIC } from '@root/libs/core/kafka/common';
 import { QUEUE_PROCESS } from '@root/apps/queue/common';
+import { LoginRequest } from '@root/apps/dto/request';
 
 @Injectable()
 export class AuthService extends BaseService {
@@ -31,7 +31,7 @@ export class AuthService extends BaseService {
     super(prismaService, loggerService, queueService, jwtService, eventEmitter);
   }
 
-  async login(params: LoginRequestBody): Promise<LoginResponse> {
+  async login(params: LoginRequest): Promise<LoginResponse> {
     const { username, password } = params;
     const account: AccountT | null = await this.prismaService.account.findFirst(
       {
@@ -69,7 +69,7 @@ export class AuthService extends BaseService {
       account,
     });
     return {
-      status: HttpStatus.OK,
+      statusCode: HttpStatus.OK,
       data: {
         token: this.jwtService.sign(
           {

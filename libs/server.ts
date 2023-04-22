@@ -4,6 +4,7 @@ import Env from './Env';
 import { RedisMicroservice } from '@root/libs/core/redis';
 import { CustomExceptionFilter } from './core/exception/CustomExceptionFilter';
 import { KafkaMicroservice } from './core/kafka';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 class Server {
   async start() {
@@ -19,6 +20,15 @@ class Server {
       redis.connect();
     }
     await app.startAllMicroservices();
+
+    const config = new DocumentBuilder()
+      .setTitle('Base NestJS example')
+      .setDescription('The Base NestJS API description')
+      .setVersion('1.0')
+      .addTag('Base NestJS')
+      .build();
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api', app, document);
     app.listen(port);
     console.log('Server is running on port :', port);
   }
