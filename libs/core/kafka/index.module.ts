@@ -5,25 +5,25 @@ import { config } from './config';
 
 @Global()
 @Module({
-    imports: [
-        ClientsModule.register([
-            {
-                name: config.injectionToken,
-                transport: Transport.KAFKA,
-                options: {
-                    client: {
-                        clientId: config.clientId,
-                        brokers: [`${config.host}:${config.port}`],
-                    },
-                    consumer: {
-                        groupId: config.groupId,
-                    }
-                }
-            },
-        ]),
-    ],
-    controllers: [],
-    providers: [KafkaService,],
-    exports: [KafkaService,],
+  imports: [
+    ClientsModule.register([
+      {
+        name: config.injectionToken,
+        transport: Transport.KAFKA,
+        options: {
+          client: {
+            clientId: config.clientId,
+            brokers: [`${config.host}:${config.port}`],
+          },
+          consumer: {
+            groupId: config.groupId,
+          },
+        },
+      },
+    ]),
+  ],
+  controllers: [],
+  providers: [KafkaService],
+  exports: [KafkaService],
 })
-export class KafkaModule { }
+export class KafkaModule {}

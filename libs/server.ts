@@ -26,6 +26,7 @@ class Server {
       .setDescription('The Base NestJS API description')
       .setVersion('1.0')
       .addTag('Base NestJS')
+      .addBearerAuth()
       .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document);

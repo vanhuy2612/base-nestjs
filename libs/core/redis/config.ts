@@ -1,4 +1,4 @@
-import Env from "@root/libs/Env";
+import Env from '@root/libs/Env';
 
 export const config = {
   host: Env.get('REDIS_HOST', 'localhost'),

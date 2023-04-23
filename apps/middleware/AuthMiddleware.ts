@@ -19,13 +19,19 @@ export class AuthMiddleware extends BaseMiddleware {
         secret: Env.get('JWT_SECRET', 'nguoianhmuonquen'),
       });
       if (!auth.id) {
-        throw new APIException(HttpStatus.UNAUTHORIZED, ErrorMessageKey.TOKEN_IS_INVALID);
+        throw new APIException(
+          HttpStatus.UNAUTHORIZED,
+          ErrorMessageKey.TOKEN_IS_INVALID,
+        );
       }
       // Save auth to req
       req.auth = auth;
       next();
     } catch (e) {
-      throw new APIException(HttpStatus.UNAUTHORIZED, ErrorMessageKey.TOKEN_IS_INVALID);
+      throw new APIException(
+        HttpStatus.UNAUTHORIZED,
+        ErrorMessageKey.TOKEN_IS_INVALID,
+      );
     }
   }
 }

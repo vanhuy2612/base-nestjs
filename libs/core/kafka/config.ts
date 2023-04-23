@@ -1,4 +1,4 @@
-import Env from "@root/libs/Env";
+import Env from '@root/libs/Env';
 
 export const config = {
   host: Env.get('KAFKA_HOST', 'localhost'),

@@ -13,5 +13,5 @@ export class BaseService {
     readonly queueService: QueueService,
     readonly jwtService: JwtService,
     readonly eventEmitter: EventEmitter2,
-  ) { }
+  ) {}
 }

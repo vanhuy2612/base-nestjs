@@ -1,56 +1,56 @@
-import { HttpStatus } from "@nestjs/common"
-import { ApiProperty } from "@nestjs/swagger";
-import { Account } from "@prisma/client";
+import { HttpStatus } from '@nestjs/common';
+import { ApiProperty } from '@nestjs/swagger';
+import { Account } from '@prisma/client';
 
 export class PaginationResponse<TData> {
-    @ApiProperty()
-    status: HttpStatus;
-    
-    @ApiProperty()
-    total: number;
+  @ApiProperty()
+  status: HttpStatus;
 
-    @ApiProperty()
-    page: number;
+  @ApiProperty()
+  total: number;
 
-    @ApiProperty()
-    size: number;
+  @ApiProperty()
+  page: number;
 
-    data: TData[];
+  @ApiProperty()
+  size: number;
+
+  data: TData[];
 }
 
 export class AccountDTO {
-    @ApiProperty()
-    id: number;
+  @ApiProperty()
+  id: number;
 
-    @ApiProperty()
-    email: string;
-    
-    @ApiProperty()
-    name: string;
+  @ApiProperty()
+  email: string;
 
-    @ApiProperty()
-    password: string;
+  @ApiProperty()
+  name: string;
 
-    @ApiProperty()
-    roleId: number;
+  @ApiProperty()
+  password: string;
+
+  @ApiProperty()
+  roleId: number;
 }
 
 export class LoginResponse {
-    @ApiProperty()
-    statusCode: HttpStatus;
+  @ApiProperty()
+  statusCode: HttpStatus;
 
-    data: {
-        token: string;
-        permissions: string[];
-    }
+  data: {
+    token: string;
+    permissions: string[];
+  };
 }
 
 export type UserIndexResponse = {
-    status: HttpStatus,
-    data: Account[];
-}
+  status: HttpStatus;
+  data: Account[];
+};
 
 export type UserUpdateResponse = {
-    status: HttpStatus,
-    data: boolean,
-}
+  status: HttpStatus;
+  data: boolean;
+};

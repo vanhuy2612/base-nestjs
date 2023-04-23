@@ -31,7 +31,6 @@
     },
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "allowArbitraryExtensions": true,
     "allowJs": true
   }
 }

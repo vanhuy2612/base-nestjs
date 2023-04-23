@@ -1,4 +1,9 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
+import {
+  ExceptionFilter,
+  Catch,
+  ArgumentsHost,
+  HttpException,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 import { APIException } from './APIException';
 import { ErrorMessageT } from './lang';
@@ -12,33 +17,30 @@ export class CustomExceptionFilter implements ExceptionFilter {
     const status = exception.getStatus();
 
     const defaultLang: string = 'en';
-    const lang: string = request.headers['lang'] as string || defaultLang;
+    const lang: string = (request.headers['lang'] as string) || defaultLang;
     let ERROR_MESSAGES: ErrorMessageT;
     try {
       ERROR_MESSAGES = (await import(`../exception/lang/${lang}`)).default;
     } catch (e) {
-      ERROR_MESSAGES = (await import(`../exception/lang/${defaultLang}`)).default;
+      ERROR_MESSAGES = (await import(`../exception/lang/${defaultLang}`))
+        .default;
     }
 
     if (exception instanceof APIException) {
-      return response
-        .status(status)
-        .json({
-          statusCode: status,
-          timestamp: new Date().toISOString(),
-          path: request.url,
-          data: exception.data,
-          error: ERROR_MESSAGES[exception.message] || ERROR_MESSAGES['UNKNOWN'],
-        });
-    }
-
-    return response
-      .status(status)
-      .json({
+      return response.status(status).json({
         statusCode: status,
         timestamp: new Date().toISOString(),
         path: request.url,
-        error: ERROR_MESSAGES['UNKNOWN'],
+        data: exception.data,
+        error: ERROR_MESSAGES[exception.message] || ERROR_MESSAGES['UNKNOWN'],
       });
+    }
+
+    return response.status(status).json({
+      statusCode: status,
+      timestamp: new Date().toISOString(),
+      path: request.url,
+      error: ERROR_MESSAGES['UNKNOWN'],
+    });
   }
 }

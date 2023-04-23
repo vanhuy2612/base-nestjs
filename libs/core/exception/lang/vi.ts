@@ -1,22 +1,26 @@
-import { ErrorMessageT } from "./";
+import { ErrorMessageT } from './';
 
 export const ERROR_MESSAGES: ErrorMessageT = {
-    UNKNOWN: {
-        code: -1,
-        message: 'Lỗi không xác định',
-    },
-    USER_NOT_FOUND: {
-        code: 1,
-        message: 'Không tìm thấy user',
-    },
-    USERS_EMPTY: {
-        code: 2,
-        message: 'Dữ liệu rỗng',
-    },
-    TOKEN_IS_INVALID: {
-        code: 3,
-        message: 'Token không hợp lệ',
-    },
-}
+  UNKNOWN: {
+    code: -1,
+    message: 'Lỗi không xác định',
+  },
+  USER_NOT_FOUND: {
+    code: 1,
+    message: 'Không tìm thấy user',
+  },
+  USERS_EMPTY: {
+    code: 2,
+    message: 'Dữ liệu rỗng',
+  },
+  TOKEN_IS_INVALID: {
+    code: 3,
+    message: 'Token không hợp lệ',
+  },
+  PERMISSION_DENIED: {
+    code: 4,
+    message: 'Không có quyền truy cập',
+  },
+};
 
 export default ERROR_MESSAGES;

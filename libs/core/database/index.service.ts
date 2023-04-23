@@ -15,7 +15,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     });
   }
 
-  async paginationMiddleware (params: Prisma.MiddlewareParams, next) {
+  async paginationMiddleware(params: Prisma.MiddlewareParams, next) {
     return next(params);
   }
 }

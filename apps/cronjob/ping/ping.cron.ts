@@ -8,7 +8,7 @@ export class PingCronjob extends BaseCronjob {
   async handle() {
     // this.loggerService.debug('Called every 30 seconds');
     // const allUsers = await this.prismaService.user.findMany();
-    // console.log("After get all");
+    // console.log('After get all');
     // this.loggerService.log('Cronjob', allUsers);
     return true;
   }

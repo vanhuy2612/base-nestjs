@@ -5,7 +5,10 @@ import { LoggerService } from '@root/libs/core/logger/index.service';
 import { QueueService } from '@root/apps/queue/index.service';
 import { JwtService } from '@nestjs/jwt';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { PaginationResponse, UserUpdateResponse } from '@root/apps/dto/response';
+import {
+  PaginationResponse,
+  UserUpdateResponse,
+} from '@root/apps/dto/response';
 import { Account } from '@prisma/client';
 
 @Injectable()

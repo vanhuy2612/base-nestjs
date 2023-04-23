@@ -13,22 +13,16 @@ export class BaseProcessor {
 
   @OnQueueActive()
   onActive(job: Job) {
-    console.log(
-      `Processing job ${job.id} of type ${job.name} with data `,
-    );
+    console.log(`Processing job ${job.id} of type ${job.name} with data `);
   }
 
   @OnQueueRemoved()
   onRemoved(job: Job) {
-    console.log(
-      `Removed job ${job.id} of type ${job.name} with data `,
-    );
+    console.log(`Removed job ${job.id} of type ${job.name} with data `);
   }
 
   @OnQueueCompleted()
   onCompleted(job: Job) {
-    console.log(
-      `Completed job ${job.id} of type ${job.name} with data `,
-    );
+    console.log(`Completed job ${job.id} of type ${job.name} with data `);
   }
 }

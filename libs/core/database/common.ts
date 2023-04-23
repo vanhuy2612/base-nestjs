@@ -1,8 +1,5 @@
-import {
-    Account,
-    Role,
-} from "@prisma/client";
+import { Account, Role } from '@prisma/client';
 
 export type AccountT = Account & {
-    role: Role | null
-}
+  role: Role | null;
+};
