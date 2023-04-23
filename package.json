@@ -7,6 +7,7 @@
   "license": "UNLICENSED",
   "gypfile": true,
   "scripts": {
+    "gen:module": "ts-node ./helper/generate-module.ts",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "build:lib": "node-gyp configure build",
@@ -37,6 +38,7 @@
     "@prisma/client": "^4.5.0",
     "await-to-js": "^3.0.0",
     "bull": "^4.10.2",
+    "chalk": "4.1.2",
     "cluster": "^0.7.7",
     "cmake-js": "^7.2.1",
     "kafkajs": "^2.2.4",
