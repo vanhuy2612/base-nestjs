@@ -43,7 +43,7 @@ Kafka:
   + In .env file, KAFKA_STATUS = 1. Because the application must connect to microservice to become a hybrid server
 
 # Develop
-Create module:
+Create module: yarn gen:module --name <module_name> -f   
 
 # Contact
 Github: https://github.com/vanhuy2612

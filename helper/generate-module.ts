@@ -100,12 +100,125 @@ const isModuleExist = (moduleName: string) => {
   return false;
 };
 
+const upperCaseFirstLetter = (str: string) => {
+  return str[0].toUpperCase() + str.toLowerCase().substring(1);
+};
+
+const createModuleFile = (moduleName: string) => {
+  try {
+    const upperModuleName = upperCaseFirstLetter(moduleName);
+    const modulePath = path.resolve(
+      `${__dirname}/../apps/modules/${moduleName}/${moduleName}.module.ts`,
+    );
+    const content = `
+    import { Module } from '@nestjs/common';
+    import { ${upperModuleName}Controller } from './${moduleName}.controller';
+    import { ${upperModuleName}Service } from './${moduleName}.service';
+    import { JwtService } from '@nestjs/jwt';
+    @Module({
+      imports: [],
+      controllers: [${upperModuleName}Controller],
+      providers: [${upperModuleName}Service, JwtService],
+    })
+    export class ${upperModuleName}Module {}
+    `;
+    fs.appendFileSync(modulePath, content);
+  } catch (e) {}
+};
+
+const createControllerFile = (moduleName: string) => {
+  try {
+    const upperModuleName = upperCaseFirstLetter(moduleName);
+    const modulePath = path.resolve(
+      `${__dirname}/../apps/modules/${moduleName}/${moduleName}.controller.ts`,
+    );
+    const content = `
+    import { Controller } from '@nestjs/common';
+    import { ${upperModuleName}Service } from './${moduleName}.service';
+    import { ApiTags } from '@nestjs/swagger';
+
+    @ApiTags('${moduleName}')
+    @Controller('${moduleName}')
+    export class ${upperModuleName}Controller {
+      constructor(private readonly ${moduleName}Service: ${upperModuleName}Service) {}
+    }
+    `;
+    fs.appendFileSync(modulePath, content);
+  } catch (e) {}
+};
+
+const createServiceFile = (moduleName) => {
+  try {
+    const upperModuleName = upperCaseFirstLetter(moduleName);
+    const modulePath = path.resolve(
+      `${__dirname}/../apps/modules/${moduleName}/${moduleName}.service.ts`,
+    );
+    const content = `
+    import { Injectable } from '@nestjs/common';
+    import { BaseService } from '../base/base.service';
+    import { PrismaService } from '@root/libs/core/database/index.service';
+    import { LoggerService } from '@root/libs/core/logger/index.service';
+    import { QueueService } from '@root/apps/queue/index.service';
+    import { JwtService } from '@nestjs/jwt';
+    import { EventEmitter2 } from '@nestjs/event-emitter';
+
+    @Injectable()
+    export class ${upperModuleName}Service extends BaseService {
+      constructor(
+        readonly prismaService: PrismaService,
+        readonly loggerService: LoggerService,
+        readonly queueService: QueueService,
+        readonly jwtService: JwtService,
+        readonly eventEmitter: EventEmitter2,
+      ) {
+        super(prismaService, loggerService, queueService, jwtService, eventEmitter);
+      }
+    }
+    `;
+    fs.appendFileSync(modulePath, content);
+  } catch (e) {}
+};
+
+const createUnitTestFile = (moduleName: string) => {
+  try {
+    const upperModuleName = upperCaseFirstLetter(moduleName);
+    const modulePath = path.resolve(
+      `${__dirname}/../apps/modules/${moduleName}/${moduleName}.controller.spec.ts`,
+    );
+    const content = `
+    import { Test, TestingModule } from '@nestjs/testing';
+    import { ${upperModuleName}Controller } from './${moduleName}.controller';
+    import { ${upperModuleName}Service } from './${moduleName}.service';
+
+    describe('${upperModuleName}Controller', () => {
+      let ${moduleName}Controller: ${upperModuleName}Controller;
+
+      beforeEach(async () => {
+        const app: TestingModule = await Test.createTestingModule({
+          controllers: [${upperModuleName}Controller],
+          providers: [${upperModuleName}Service],
+        }).compile();
+
+        ${moduleName}Controller = app.get<${upperModuleName}Controller>(${upperModuleName}Controller);
+      });
+
+      describe('root', () => {
+        it('should return "Hello World!"', () => {
+          expect(true).toBe(true);
+        });
+      });
+    });
+    `;
+    fs.appendFileSync(modulePath, content);
+  } catch (e) {}
+};
+
 const generateModule = (moduleName: string, delExistModule: boolean) => {
   const modulePath = path.resolve(`${__dirname}/../apps/modules/${moduleName}`);
   console.log('modulePath', modulePath);
   if (delExistModule) {
     try {
-      fs.rmdirSync(modulePath);
+      fs.rmSync(modulePath, { recursive: true, force: true });
     } catch (e) {
       console.log(e);
       console.log(chalk.red(`Delete module fail.`));
@@ -118,12 +231,10 @@ const generateModule = (moduleName: string, delExistModule: boolean) => {
     console.log(chalk.red(`Mkdir module fail.`));
     process.exit(4);
   }
-
-  const controllerName = `${moduleName}.controller.ts`;
-  const module = `${moduleName}.module.ts`;
-  const service = `${moduleName}.service.ts`;
-  const testName = `${moduleName}.controller.spec.ts`;
-  
+  createModuleFile(moduleName);
+  createControllerFile(moduleName);
+  createServiceFile(moduleName);
+  createUnitTestFile(moduleName);
 };
 
 const exec = () => {
