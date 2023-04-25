@@ -12,15 +12,17 @@ import { RequestT } from '@root/libs/core/request';
 import { LoginResponse } from '@root/apps/dto/response';
 import { TOPIC } from '@root/libs/core/kafka/common';
 import { LoginRequest } from '@root/apps/dto/request';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
+import { ApiExceptionResponse, CustomApiOKResponse } from '@root/apps/decorator/response.decorator';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post('login')
-  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @CustomApiOKResponse(LoginResponse)
+  @ApiExceptionResponse()
   async login(
     @Body() params: LoginRequest,
     @Req() req: RequestT,

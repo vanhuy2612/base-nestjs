@@ -56,14 +56,19 @@ export class AccountDTO {
   roleId: number;
 }
 
+export class LoginDataDTO {
+  @ApiProperty()
+  token: string;
+
+  @ApiProperty()
+  permissions: string[];
+}
 export class LoginResponse {
   @ApiProperty()
   statusCode: HttpStatus;
 
-  data: {
-    token: string;
-    permissions: string[];
-  };
+  @ApiProperty({ type: LoginDataDTO })
+  data: LoginDataDTO;
 }
 
 export type UserIndexResponse = {

@@ -8,12 +8,11 @@ import {
   UserUpdateResponse,
 } from '@root/apps/dto/response';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { ApiPaginatedResponse } from '@root/apps/decorator/pagination.decorator';
-import { ApiExceptionResponse } from '@root/apps/decorator/exception.decorator';
+import { ApiExceptionResponse, ApiPaginatedResponse } from '@root/apps/decorator/response.decorator';
 @ApiTags('users')
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Get()
   @ApiBearerAuth()
@@ -32,6 +31,7 @@ export class UserController {
 
   @Put('/:id')
   @ApiBearerAuth()
+  @ApiExceptionResponse()
   async edit(@Req() req: RequestT): Promise<UserUpdateResponse> {
     try {
       console.log('Request.users.edit', req.auth, req.auth.permissions);
