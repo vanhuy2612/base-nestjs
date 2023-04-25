@@ -4,11 +4,12 @@ import { RequestT } from '@root/libs/core/request';
 import { UserService } from './user.service';
 import {
   AccountDTO,
-  PaginationResponse,
+  PaginatedResponse,
   UserUpdateResponse,
 } from '@root/apps/dto/response';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { ApiPaginationResponse } from '@root/apps/decorator/pagination.decorator';
+import { ApiPaginatedResponse } from '@root/apps/decorator/pagination.decorator';
+import { ApiExceptionResponse } from '@root/apps/decorator/exception.decorator';
 @ApiTags('users')
 @Controller('users')
 export class UserController {
@@ -16,8 +17,9 @@ export class UserController {
 
   @Get()
   @ApiBearerAuth()
-  @ApiPaginationResponse(AccountDTO)
-  async index(@Req() req: RequestT): Promise<PaginationResponse<AccountDTO>> {
+  @ApiPaginatedResponse(AccountDTO)
+  @ApiExceptionResponse()
+  async index(@Req() req: RequestT): Promise<PaginatedResponse<AccountDTO>> {
     try {
       console.log('Request.users.index', req.auth, req.auth.permissions);
       const result = await this.userService.index();

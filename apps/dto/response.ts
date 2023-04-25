@@ -2,7 +2,7 @@ import { HttpStatus } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { Account } from '@prisma/client';
 
-export class PaginationResponse<TData> {
+export class PaginatedResponse<TData> {
   @ApiProperty()
   status: HttpStatus;
 
@@ -15,9 +15,30 @@ export class PaginationResponse<TData> {
   @ApiProperty()
   size: number;
 
+  @ApiProperty({ isArray: true })
   data: TData[];
 }
 
+export class ExceptionDTO {
+  @ApiProperty()
+  code: number;
+
+  @ApiProperty()
+  message: string;
+}
+export class ExceptionResponse {
+  @ApiProperty()
+  status: HttpStatus;
+
+  @ApiProperty()
+  path: string;
+
+  @ApiProperty()
+  timestamp: string;
+
+  @ApiProperty({ type: ExceptionDTO })
+  error: ExceptionDTO;
+}
 export class AccountDTO {
   @ApiProperty()
   id: number;
