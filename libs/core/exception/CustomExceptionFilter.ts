@@ -7,6 +7,7 @@ import {
 import { Request, Response } from 'express';
 import { APIException } from './APIException';
 import { ErrorMessageT } from './lang';
+import { ThrottlerException } from '@nestjs/throttler';
 
 @Catch(HttpException)
 export class CustomExceptionFilter implements ExceptionFilter {
@@ -33,6 +34,16 @@ export class CustomExceptionFilter implements ExceptionFilter {
         path: request.url,
         data: exception.data,
         error: ERROR_MESSAGES[exception.message] || ERROR_MESSAGES['UNKNOWN'],
+      });
+    }
+
+    if (exception instanceof ThrottlerException) {
+      return response.status(status).json({
+        statusCode: status,
+        timestamp: new Date().toISOString(),
+        path: request.url,
+        data: {},
+        error: ERROR_MESSAGES['TOO_MANY_REQUEST'],
       });
     }
 

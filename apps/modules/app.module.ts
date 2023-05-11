@@ -18,10 +18,16 @@ import { EventModule } from '@root/apps/events/index.module';
 import { KafkaModule } from '@root/libs/core/kafka/index.module';
 
 import Env from '@root/libs/Env';
+import { THROTTLE_LIMIT, THROTTLE_TTL } from '../shared/constant';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 ConfigModule.forRoot();
 @Module({
   imports: [
+    ThrottlerModule.forRoot({
+      ttl: THROTTLE_TTL,
+      limit: THROTTLE_LIMIT,
+    }),
     BaseModule,
     PrismaModule,
     CronjobModule,

@@ -21,6 +21,10 @@ export const ERROR_MESSAGES: ErrorMessageT = {
     code: 4,
     message: 'Không có quyền truy cập',
   },
+  TOO_MANY_REQUEST: {
+    code: 5,
+    message: 'Quá nhiều yêu cầu truy cập',
+  },
 };
 
 export default ERROR_MESSAGES;

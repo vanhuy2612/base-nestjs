@@ -21,6 +21,10 @@ export const ERROR_MESSAGES: ErrorMessageT = {
     code: 4,
     message: 'PERMISSION_DENIED',
   },
+  TOO_MANY_REQUEST: {
+    code: 5,
+    message: 'TOO_MANY_REQUEST',
+  },
 };
 
 export default ERROR_MESSAGES;
