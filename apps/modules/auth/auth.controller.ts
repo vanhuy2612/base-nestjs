@@ -13,12 +13,15 @@ import { LoginResponse } from '@root/apps/dto/response';
 import { TOPIC } from '@root/libs/core/kafka/common';
 import { LoginRequest } from '@root/apps/dto/request';
 import { ApiTags } from '@nestjs/swagger';
-import { ApiExceptionResponse, CustomApiOKResponse } from '@root/apps/decorator/response.decorator';
+import {
+  ApiExceptionResponse,
+  CustomApiOKResponse,
+} from '@root/apps/decorator/response.decorator';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Post('login')
   @CustomApiOKResponse(LoginResponse)

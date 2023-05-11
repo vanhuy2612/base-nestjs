@@ -44,7 +44,10 @@ export class AuthService extends BaseService {
       },
     );
     if (!account)
-      throw new APIException(HttpStatus.NOT_FOUND, ErrorMessageKey.USER_NOT_FOUND);
+      throw new APIException(
+        HttpStatus.NOT_FOUND,
+        ErrorMessageKey.USER_NOT_FOUND,
+      );
     let permissions: Permission[];
     if (account.role.key === 'root') {
       permissions = await this.prismaService.permission.findMany();
