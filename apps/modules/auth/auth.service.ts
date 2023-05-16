@@ -17,6 +17,8 @@ import { KafkaService } from '@root/libs/core/kafka/index.service';
 import { TOPIC } from '@root/libs/core/kafka/common';
 import { QUEUE_PROCESS } from '@root/apps/queue/common';
 import { LoginRequest } from '@root/apps/dto/request';
+import { SocketIOGateway } from '@root/apps/socket/index.gateway';
+import { SOCKET_EVENT } from '@root/apps/socket/common';
 
 @Injectable()
 export class AuthService extends BaseService {
@@ -27,8 +29,9 @@ export class AuthService extends BaseService {
     readonly jwtService: JwtService,
     readonly eventEmitter: EventEmitter2,
     readonly kafkaCli: KafkaService,
+    readonly socketIOGateway: SocketIOGateway,
   ) {
-    super(prismaService, loggerService, queueService, jwtService, eventEmitter);
+    super(prismaService, loggerService, queueService, jwtService, eventEmitter, socketIOGateway);
   }
 
   async login(params: LoginRequest): Promise<LoginResponse> {
@@ -69,6 +72,11 @@ export class AuthService extends BaseService {
     await this.queueService.mailQueue.add(QUEUE_PROCESS.SEND_MAIL, {
       account,
     });
+
+    this.socketIOGateway.server.emit(SOCKET_EVENT.USER_LOGIN, { id: account.id, email: account.email, name: account.name }, () => {
+      console.log("Emit Event success.");
+    });
+
     return {
       statusCode: HttpStatus.OK,
       data: {

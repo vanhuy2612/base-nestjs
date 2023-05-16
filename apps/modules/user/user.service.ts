@@ -7,6 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { PaginatedResponse, UserUpdateResponse } from '@root/apps/dto/response';
 import { Account } from '@prisma/client';
+import { SocketIOGateway } from '@root/apps/socket/index.gateway';
 
 @Injectable()
 export class UserService extends BaseService {
@@ -16,8 +17,9 @@ export class UserService extends BaseService {
     readonly queueService: QueueService,
     readonly jwtService: JwtService,
     readonly eventEmitter: EventEmitter2,
+    readonly socketIOGateway: SocketIOGateway,
   ) {
-    super(prismaService, loggerService, queueService, jwtService, eventEmitter);
+    super(prismaService, loggerService, queueService, jwtService, eventEmitter, socketIOGateway);
   }
 
   async index(): Promise<PaginatedResponse<Account>> {

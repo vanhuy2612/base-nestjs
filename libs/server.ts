@@ -11,15 +11,15 @@ class Server {
     const port = Env.get('PORT', 3333);
     const app = await NestFactory.create(AppModule);
     app.useGlobalFilters(new CustomExceptionFilter());
-    if (Env.get('KAFKA_STATUS', '0') === '1') {
-      const kafka = new KafkaMicroservice(app);
-      kafka.connect();
-    }
-    if (Env.get('REDIS_STATUS', '0') === '1') {
-      const redis = new RedisMicroservice(app);
-      redis.connect();
-    }
-    await app.startAllMicroservices();
+    // if (Env.get('KAFKA_STATUS', '0') === '1') {
+    //   const kafka = new KafkaMicroservice(app);
+    //   kafka.connect();
+    // }
+    // if (Env.get('REDIS_STATUS', '0') === '1') {
+    //   const redis = new RedisMicroservice(app);
+    //   redis.connect();
+    // }
+    // await app.startAllMicroservices();
 
     const config = new DocumentBuilder()
       .setTitle('Base NestJS example')

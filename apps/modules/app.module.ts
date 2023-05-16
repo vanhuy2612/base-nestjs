@@ -20,6 +20,7 @@ import { KafkaModule } from '@root/libs/core/kafka/index.module';
 import Env from '@root/libs/Env';
 import { THROTTLE_LIMIT, THROTTLE_TTL } from '../shared/constant';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { SocketIOModule } from '@root/apps/socket/index.module';
 
 ConfigModule.forRoot();
 @Module({
@@ -28,6 +29,7 @@ ConfigModule.forRoot();
       ttl: THROTTLE_TTL,
       limit: THROTTLE_LIMIT,
     }),
+    SocketIOModule,
     BaseModule,
     PrismaModule,
     CronjobModule,

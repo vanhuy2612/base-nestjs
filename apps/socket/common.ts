@@ -1,0 +1,4 @@
+export const SOCKET_EVENT = {
+    USER_CONNECTED: 'USER_CONNECTED',
+    USER_LOGIN: 'USER_LOGIN',
+}

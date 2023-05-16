@@ -4,6 +4,7 @@ import { LoggerService } from '@root/libs/core/logger/index.service';
 import { QueueService } from '@root/apps/queue/index.service';
 import { JwtService } from '@nestjs/jwt';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { SocketIOGateway } from '@root/apps/socket/index.gateway';
 
 @Injectable()
 export class BaseService {
@@ -13,5 +14,6 @@ export class BaseService {
     readonly queueService: QueueService,
     readonly jwtService: JwtService,
     readonly eventEmitter: EventEmitter2,
-  ) {}
+    readonly socketIOGateway: SocketIOGateway,
+  ) { }
 }
