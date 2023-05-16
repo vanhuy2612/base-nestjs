@@ -4,7 +4,6 @@ import {
   Ctx,
   EventPattern,
   KafkaContext,
-  MessagePattern,
   Payload,
 } from '@nestjs/microservices';
 import { Exception } from '@root/libs/core/exception/Exception';
@@ -13,12 +12,19 @@ import { LoginResponse } from '@root/apps/dto/response';
 import { TOPIC } from '@root/libs/core/kafka/common';
 import { LoginRequest } from '@root/apps/dto/request';
 import { ApiTags } from '@nestjs/swagger';
-import { ApiExceptionResponse, CustomApiOKResponse } from '@root/apps/decorator/response.decorator';
+import {
+  ApiExceptionResponse,
+  CustomApiOKResponse,
+} from '@root/apps/decorator/response.decorator';
+import { LoggerService } from '@root/libs/core/logger/index.service';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(
+    private readonly authService: AuthService,
+    private readonly logger: LoggerService,
+  ) { }
 
   @Post('login')
   @CustomApiOKResponse(LoginResponse)
@@ -37,7 +43,7 @@ export class AuthController {
 
   @EventPattern(TOPIC.USER_LOGIN)
   async handle(@Payload() message: any, @Ctx() context: KafkaContext) {
-    console.log(
+    this.logger.log(
       `Auth Controller Data from consumer ${TOPIC.USER_LOGIN} `,
       message,
       context.getTopic(),

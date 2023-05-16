@@ -22,6 +22,7 @@ Mr.Huy
   Kafka
   ZooKeeper
 + Swagger
++ Websocket - Socket IO
 
 # Setup
 Step 1:
@@ -41,6 +42,8 @@ Step 3:
 Kafka:
   + EventPattern must be defined in Controller
   + In .env file, KAFKA_STATUS = 1. Because the application must connect to microservice to become a hybrid server
+Websocket:
+  + In .evn modify port of WEBSOCKET_PORT
 
 # Develop
 Create module: yarn gen:module --name <module_name> -f   

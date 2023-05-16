@@ -13,11 +13,11 @@ export class UserListener extends BaseListener {
   @OnEvent(EVENT_NAMES.USER_LOGIN)
   async handle(event: UserLoginEvent) {
     try {
-      console.log('User is logining ...', event.username);
+      this.logger.log('User is logining ...', event.username);
       const users = await this.prismaService.account.findMany();
-      console.log('From Event Emmiter, ', users.length);
+      this.logger.log('From Event Emmiter, ', users.length);
     } catch (e) {
-      this.loggerService.error(`%s is fail.`, EVENT_NAMES.USER_LOGIN);
+      this.logger.error(`%s is fail.`, EVENT_NAMES.USER_LOGIN);
     }
   }
 }

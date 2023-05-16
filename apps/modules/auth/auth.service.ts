@@ -24,14 +24,14 @@ import { SOCKET_EVENT } from '@root/apps/socket/common';
 export class AuthService extends BaseService {
   constructor(
     readonly prismaService: PrismaService,
-    readonly loggerService: LoggerService,
+    readonly logger: LoggerService,
     readonly queueService: QueueService,
     readonly jwtService: JwtService,
     readonly eventEmitter: EventEmitter2,
     readonly kafkaCli: KafkaService,
     readonly socketIOGateway: SocketIOGateway,
   ) {
-    super(prismaService, loggerService, queueService, jwtService, eventEmitter, socketIOGateway);
+    super(prismaService, logger, queueService, jwtService, eventEmitter, socketIOGateway);
   }
 
   async login(params: LoginRequest): Promise<LoginResponse> {
@@ -47,7 +47,10 @@ export class AuthService extends BaseService {
       },
     );
     if (!account)
-      throw new APIException(HttpStatus.NOT_FOUND, ErrorMessageKey.USER_NOT_FOUND);
+      throw new APIException(
+        HttpStatus.NOT_FOUND,
+        ErrorMessageKey.USER_NOT_FOUND,
+      );
     let permissions: Permission[];
     if (account.role.key === 'root') {
       permissions = await this.prismaService.permission.findMany();
@@ -74,7 +77,7 @@ export class AuthService extends BaseService {
     });
 
     this.socketIOGateway.server.emit(SOCKET_EVENT.USER_LOGIN, { id: account.id, email: account.email, name: account.name }, () => {
-      console.log("Emit Event success.");
+      this.logger.log("Emit Event success.");
     });
 
     return {

@@ -7,6 +7,6 @@ import { QueueService } from '../../queue/index.service';
 export class BaseCronjob {
   constructor(
     readonly prismaService: PrismaService,
-    readonly loggerService: LoggerService,
-  ) {}
+    readonly logger: LoggerService,
+  ) { }
 }

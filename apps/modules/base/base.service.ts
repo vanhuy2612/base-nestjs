@@ -10,7 +10,7 @@ import { SocketIOGateway } from '@root/apps/socket/index.gateway';
 export class BaseService {
   constructor(
     readonly prismaService: PrismaService,
-    readonly loggerService: LoggerService,
+    readonly logger: LoggerService,
     readonly queueService: QueueService,
     readonly jwtService: JwtService,
     readonly eventEmitter: EventEmitter2,

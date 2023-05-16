@@ -1,5 +1,10 @@
 import { Type, applyDecorators } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiExtraModels,
+  ApiOkResponse,
+  getSchemaPath,
+} from '@nestjs/swagger';
 import { ExceptionResponse, PaginatedResponse } from '@root/apps/dto/response';
 
 export const ApiPaginatedResponse = <TModel extends Type<any>>(
@@ -49,4 +54,3 @@ export const ApiExceptionResponse = () => {
     }),
   );
 };
-

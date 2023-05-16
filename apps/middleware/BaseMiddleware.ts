@@ -10,10 +10,10 @@ import { QueueService } from '../queue/index.service';
 export class BaseMiddleware implements NestMiddleware {
   constructor(
     readonly prismaService: PrismaService,
-    readonly loggerService: LoggerService,
+    readonly logger: LoggerService,
     readonly queueService: QueueService,
     readonly jwtService: JwtService,
-  ) {}
+  ) { }
   async use(req: RequestT, res: ResponseT, next: (error?: any) => void) {
     next();
   }

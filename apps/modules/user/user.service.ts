@@ -13,13 +13,13 @@ import { SocketIOGateway } from '@root/apps/socket/index.gateway';
 export class UserService extends BaseService {
   constructor(
     readonly prismaService: PrismaService,
-    readonly loggerService: LoggerService,
+    readonly logger: LoggerService,
     readonly queueService: QueueService,
     readonly jwtService: JwtService,
     readonly eventEmitter: EventEmitter2,
     readonly socketIOGateway: SocketIOGateway,
   ) {
-    super(prismaService, loggerService, queueService, jwtService, eventEmitter, socketIOGateway);
+    super(prismaService, logger, queueService, jwtService, eventEmitter, socketIOGateway);
   }
 
   async index(): Promise<PaginatedResponse<Account>> {

@@ -123,7 +123,7 @@ const createModuleFile = (moduleName: string) => {
     export class ${upperModuleName}Module {}
     `;
     fs.appendFileSync(modulePath, content);
-  } catch (e) {}
+  } catch (e) { }
 };
 
 const createControllerFile = (moduleName: string) => {
@@ -144,7 +144,7 @@ const createControllerFile = (moduleName: string) => {
     }
     `;
     fs.appendFileSync(modulePath, content);
-  } catch (e) {}
+  } catch (e) { }
 };
 
 const createServiceFile = (moduleName) => {
@@ -166,17 +166,17 @@ const createServiceFile = (moduleName) => {
     export class ${upperModuleName}Service extends BaseService {
       constructor(
         readonly prismaService: PrismaService,
-        readonly loggerService: LoggerService,
+        readonly logger: LoggerService,
         readonly queueService: QueueService,
         readonly jwtService: JwtService,
         readonly eventEmitter: EventEmitter2,
       ) {
-        super(prismaService, loggerService, queueService, jwtService, eventEmitter);
+        super(prismaService, logger, queueService, jwtService, eventEmitter);
       }
     }
     `;
     fs.appendFileSync(modulePath, content);
-  } catch (e) {}
+  } catch (e) { }
 };
 
 const createUnitTestFile = (moduleName: string) => {
@@ -210,7 +210,7 @@ const createUnitTestFile = (moduleName: string) => {
     });
     `;
     fs.appendFileSync(modulePath, content);
-  } catch (e) {}
+  } catch (e) { }
 };
 
 const generateModule = (moduleName: string, delExistModule: boolean) => {

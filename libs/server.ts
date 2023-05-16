@@ -5,9 +5,11 @@ import { RedisMicroservice } from '@root/libs/core/redis';
 import { CustomExceptionFilter } from './core/exception/CustomExceptionFilter';
 import { KafkaMicroservice } from './core/kafka';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { LoggerService } from './core/logger/index.service';
 
 class Server {
   async start() {
+    const logger = new LoggerService();
     const port = Env.get('PORT', 3333);
     const app = await NestFactory.create(AppModule);
     app.useGlobalFilters(new CustomExceptionFilter());
@@ -31,7 +33,7 @@ class Server {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document);
     app.listen(port);
-    console.log('Server is running on port :', port);
+    logger.log('Server is running on port :', port);
   }
 }
 

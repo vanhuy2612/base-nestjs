@@ -8,7 +8,10 @@ import {
   UserUpdateResponse,
 } from '@root/apps/dto/response';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { ApiExceptionResponse, ApiPaginatedResponse } from '@root/apps/decorator/response.decorator';
+import {
+  ApiExceptionResponse,
+  ApiPaginatedResponse,
+} from '@root/apps/decorator/response.decorator';
 import { AuthDecorator } from '@root/apps/decorator/auth.decorator';
 import { Auth } from '../auth/common';
 @ApiTags('users')
@@ -43,7 +46,7 @@ export class UserController {
     @AuthDecorator() auth: Auth,
   ): Promise<UserUpdateResponse> {
     try {
-      console.log("id", id);
+      console.log('id', id);
       console.log('Request.users.edit', auth, auth.permissions);
 
       const result = await this.userService.edit();

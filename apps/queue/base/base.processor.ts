@@ -8,21 +8,21 @@ import { LoggerService } from '../../../libs/core/logger/index.service';
 export class BaseProcessor {
   constructor(
     readonly prismaService: PrismaService,
-    readonly loggerService: LoggerService,
-  ) {}
+    readonly logger: LoggerService,
+  ) { }
 
   @OnQueueActive()
   onActive(job: Job) {
-    console.log(`Processing job ${job.id} of type ${job.name} with data `);
+    this.logger.log(`Processing job ${job.id} of type ${job.name} with data `);
   }
 
   @OnQueueRemoved()
   onRemoved(job: Job) {
-    console.log(`Removed job ${job.id} of type ${job.name} with data `);
+    this.logger.log(`Removed job ${job.id} of type ${job.name} with data `);
   }
 
   @OnQueueCompleted()
   onCompleted(job: Job) {
-    console.log(`Completed job ${job.id} of type ${job.name} with data `);
+    this.logger.log(`Completed job ${job.id} of type ${job.name} with data `);
   }
 }

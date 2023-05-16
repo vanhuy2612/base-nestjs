@@ -7,10 +7,10 @@ import { BaseProcessor } from '../base/base.processor';
 export class MailProcessor extends BaseProcessor {
   @Process(QUEUE_PROCESS.SEND_MAIL)
   async handle(job: Job<unknown>) {
-    console.log('JOB ID:', job.id);
-    console.log('Start handling...');
+    this.logger.log('JOB ID:', job.id);
+    this.logger.log('Start handling...');
     const allUsers = await this.prismaService.account.findMany();
-    console.log('After get all');
+    this.logger.log('After get all');
     return true;
   }
 }

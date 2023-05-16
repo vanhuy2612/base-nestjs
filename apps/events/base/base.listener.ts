@@ -6,6 +6,6 @@ import { LoggerService } from '../../../libs/core/logger/index.service';
 export class BaseListener {
   constructor(
     readonly prismaService: PrismaService,
-    readonly loggerService: LoggerService,
-  ) {}
+    readonly logger: LoggerService,
+  ) { }
 }

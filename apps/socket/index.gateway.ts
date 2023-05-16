@@ -1,4 +1,4 @@
-import { OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import {
     ConnectedSocket,
     MessageBody,
@@ -9,28 +9,35 @@ import {
 import Env from '@root/libs/Env';
 import { Server, Socket } from 'socket.io';
 import { SOCKET_EVENT } from './common';
+import { LoggerService } from '@root/libs/core/logger/index.service';
 
-const port = Env.get('WEBSOCKET_PORT', 80);
-@WebSocketGateway(80, {
+const port: number = parseInt(Env.get('WEBSOCKET_PORT', 80));
+@WebSocketGateway(port, {
     cors: {
         origin: '*',
     },
 })
+@Injectable()
 export class SocketIOGateway implements OnModuleInit {
+    constructor(
+        readonly logger: LoggerService
+    ) { }
+
     async onModuleInit() {
-        console.log('************ SocketIOGateway is running at', port);
+        this.logger.log('************ SocketIOGateway is running at', port);
     }
 
     afterInit(server: Server) {
-        console.log('************ SocketIOGateway is running at', port);
+        this.logger.log('************ SocketIOGateway is running at', port);
     }
 
     handleDisconnect(client: Socket) {
-        console.log(`Client Disconnected: ${client.id}`);
+        this.logger.log(`Client Disconnected: ${client.id}`);
     }
 
     handleConnection(client: Socket, ...args: any[]) {
-        console.log(`Client Connected: ${client.id}`, args);
+        this.logger.log(`Client Connected: ${client.id}`, args);
+        client.join('room_name');
     }
 
     @WebSocketServer()
@@ -41,7 +48,7 @@ export class SocketIOGateway implements OnModuleInit {
         @MessageBody() data: any,
         @ConnectedSocket() client: Socket
     ) {
-        console.log("User logged in ", data);
+        this.logger.log("User logged in ", data);
     }
 
     @SubscribeMessage('events')
@@ -49,8 +56,9 @@ export class SocketIOGateway implements OnModuleInit {
         @MessageBody() data: any,
         @ConnectedSocket() client: Socket,
     ) {
-        console.log("Socket", client.id, data);
+        this.logger.log("Socket", client.id, data);
         this.server.emit('RESPONSE_EVENT', { data: 123 });
+        this.server.to('room_name').emit('RESPONSE_EVENT', { data: 456 });
         return;
     }
 }

@@ -1,9 +1,11 @@
 import { INestApplication } from '@nestjs/common';
 import { Transport } from '@nestjs/microservices';
 import { config as redisConfig } from '@root/libs/core/redis/config';
+import { LoggerService } from '../logger/index.service';
 
 export class RedisMicroservice {
   private readonly app: INestApplication;
+
   constructor(app: INestApplication) {
     this.app = app;
   }
