@@ -15,5 +15,5 @@ export class BaseService {
     readonly jwtService: JwtService,
     readonly eventEmitter: EventEmitter2,
     readonly socketIOGateway: SocketIOGateway,
-  ) { }
+  ) {}
 }

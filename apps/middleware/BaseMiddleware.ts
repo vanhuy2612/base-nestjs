@@ -13,7 +13,7 @@ export class BaseMiddleware implements NestMiddleware {
     readonly logger: LoggerService,
     readonly queueService: QueueService,
     readonly jwtService: JwtService,
-  ) { }
+  ) {}
   async use(req: RequestT, res: ResponseT, next: (error?: any) => void) {
     next();
   }

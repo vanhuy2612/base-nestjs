@@ -5,12 +5,9 @@ import { SocketIOGateway } from './index.gateway';
 
 @Global()
 @Module({
-    imports: [
-        PrismaModule,
-        LoggerModule,
-    ],
-    controllers: [],
-    providers: [SocketIOGateway],
-    exports: [SocketIOGateway],
+  imports: [PrismaModule, LoggerModule],
+  controllers: [],
+  providers: [SocketIOGateway],
+  exports: [SocketIOGateway],
 })
-export class SocketIOModule { }
+export class SocketIOModule {}

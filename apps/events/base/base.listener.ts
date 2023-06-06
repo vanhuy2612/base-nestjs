@@ -7,5 +7,5 @@ export class BaseListener {
   constructor(
     readonly prismaService: PrismaService,
     readonly logger: LoggerService,
-  ) { }
+  ) {}
 }

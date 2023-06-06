@@ -19,7 +19,14 @@ export class UserService extends BaseService {
     readonly eventEmitter: EventEmitter2,
     readonly socketIOGateway: SocketIOGateway,
   ) {
-    super(prismaService, logger, queueService, jwtService, eventEmitter, socketIOGateway);
+    super(
+      prismaService,
+      logger,
+      queueService,
+      jwtService,
+      eventEmitter,
+      socketIOGateway,
+    );
   }
 
   async index(): Promise<PaginatedResponse<Account>> {

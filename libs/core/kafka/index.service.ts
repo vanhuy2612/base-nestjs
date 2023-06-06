@@ -10,10 +10,10 @@ import { TOPIC } from './common';
 
 @Injectable()
 export class KafkaService implements OnModuleInit, OnApplicationShutdown {
-  constructor(@Inject(config.injectionToken) readonly client: ClientKafka) { }
+  constructor(@Inject(config.injectionToken) readonly client: ClientKafka) {}
 
   async onModuleInit() {
-    for (let key in TOPIC) {
+    for (const key in TOPIC) {
       this.client.subscribeToResponseOf(TOPIC[key]);
     }
     await this.client.connect();

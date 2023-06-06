@@ -6,8 +6,8 @@ import { LoggerService } from '@root/libs/core/logger/index.service';
 export class EventEmitterService implements OnModuleInit {
   constructor(
     readonly prismaService: PrismaService,
-    readonly logger: LoggerService
-  ) { }
+    readonly logger: LoggerService,
+  ) {}
 
   async onModuleInit() {
     this.logger.log('************ Event Emitter is running ******************');

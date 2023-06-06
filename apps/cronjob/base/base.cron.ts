@@ -8,5 +8,5 @@ export class BaseCronjob {
   constructor(
     readonly prismaService: PrismaService,
     readonly logger: LoggerService,
-  ) { }
+  ) {}
 }

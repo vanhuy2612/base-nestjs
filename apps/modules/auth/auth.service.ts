@@ -31,7 +31,14 @@ export class AuthService extends BaseService {
     readonly kafkaCli: KafkaService,
     readonly socketIOGateway: SocketIOGateway,
   ) {
-    super(prismaService, logger, queueService, jwtService, eventEmitter, socketIOGateway);
+    super(
+      prismaService,
+      logger,
+      queueService,
+      jwtService,
+      eventEmitter,
+      socketIOGateway,
+    );
   }
 
   async login(params: LoginRequest): Promise<LoginResponse> {
@@ -76,9 +83,13 @@ export class AuthService extends BaseService {
       account,
     });
 
-    this.socketIOGateway.server.emit(SOCKET_EVENT.USER_LOGIN, { id: account.id, email: account.email, name: account.name }, () => {
-      this.logger.log("Emit Event success.");
-    });
+    this.socketIOGateway.server.emit(
+      SOCKET_EVENT.USER_LOGIN,
+      { id: account.id, email: account.email, name: account.name },
+      () => {
+        this.logger.log('Emit Event success.');
+      },
+    );
 
     return {
       statusCode: HttpStatus.OK,

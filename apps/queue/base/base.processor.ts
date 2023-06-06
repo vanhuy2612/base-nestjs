@@ -9,7 +9,7 @@ export class BaseProcessor {
   constructor(
     readonly prismaService: PrismaService,
     readonly logger: LoggerService,
-  ) { }
+  ) {}
 
   @OnQueueActive()
   onActive(job: Job) {
