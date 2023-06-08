@@ -1,4 +1,12 @@
-import { Controller, Get, Param, ParseIntPipe, Put, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Put,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { Exception } from '@root/libs/core/exception/Exception';
 import { RequestT } from '@root/libs/core/request';
 import { UserService } from './user.service';
@@ -14,6 +22,8 @@ import {
 } from '@root/apps/decorator/response.decorator';
 import { AuthDecorator } from '@root/apps/decorator/auth.decorator';
 import { Auth } from '../auth/common';
+import { UserWhereInput } from '@root/apps/dto/request';
+import { QueryTransformPipe } from '@root/apps/pipe/request.pipe';
 @ApiTags('users')
 @Controller('users')
 export class UserController {
@@ -25,11 +35,12 @@ export class UserController {
   @ApiExceptionResponse()
   async index(
     @Req() req: RequestT,
+    @Query(new QueryTransformPipe()) query: UserWhereInput,
     @AuthDecorator() auth: Auth,
   ): Promise<PaginatedResponse<AccountDTO>> {
     try {
       console.log('Request.users.index', auth, auth.permissions);
-      const result = await this.userService.index();
+      const result = await this.userService.index(query);
       return result;
     } catch (e) {
       console.log(e);

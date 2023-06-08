@@ -6,3 +6,12 @@ export class LoginRequest {
   @ApiProperty()
   password: string;
 }
+
+export class UserWhereInput {
+  @ApiProperty()
+  name: string | undefined;
+}
+export class UserIndexRequest {
+  @ApiProperty({ type: UserWhereInput })
+  where: UserWhereInput;
+}

@@ -8,6 +8,7 @@ import { SocketIOGateway } from '@root/apps/socket/index.gateway';
 
 @Injectable()
 export class BaseService {
+  public model: any;
   constructor(
     readonly prismaService: PrismaService,
     readonly logger: LoggerService,

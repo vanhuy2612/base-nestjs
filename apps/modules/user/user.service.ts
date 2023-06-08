@@ -8,9 +8,11 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { PaginatedResponse, UserUpdateResponse } from '@root/apps/dto/response';
 import { Account } from '@prisma/client';
 import { SocketIOGateway } from '@root/apps/socket/index.gateway';
+import { UserWhereInput } from '@root/apps/dto/request';
 
 @Injectable()
 export class UserService extends BaseService {
+  public model = this.prismaService.account;
   constructor(
     readonly prismaService: PrismaService,
     readonly logger: LoggerService,
@@ -29,8 +31,11 @@ export class UserService extends BaseService {
     );
   }
 
-  async index(): Promise<PaginatedResponse<Account>> {
-    const users = await this.prismaService.account.findMany();
+  async index(query: UserWhereInput): Promise<PaginatedResponse<Account>> {
+    console.log('Query', query);
+    const users = await this.model.findMany({
+      where: query,
+    });
     return {
       status: HttpStatus.OK,
       data: users,

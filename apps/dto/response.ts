@@ -71,12 +71,16 @@ export class LoginResponse {
   data: LoginDataDTO;
 }
 
-export type UserIndexResponse = {
+export class UserIndexResponse {
+  @ApiProperty()
   status: HttpStatus;
+  @ApiProperty()
   data: Account[];
-};
+}
 
-export type UserUpdateResponse = {
+export class UserUpdateResponse {
+  @ApiProperty()
   status: HttpStatus;
+  @ApiProperty()
   data: boolean;
-};
+}
