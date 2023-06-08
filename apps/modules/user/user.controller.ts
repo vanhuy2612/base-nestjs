@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   Param,
@@ -22,8 +23,8 @@ import {
 } from '@root/apps/decorator/response.decorator';
 import { AuthDecorator } from '@root/apps/decorator/auth.decorator';
 import { Auth } from '../auth/common';
-import { UserWhereInput } from '@root/apps/dto/request';
-import { QueryTransformPipe } from '@root/apps/pipe/request.pipe';
+import { UserIndexRequest, UserUpdateRequest } from '@root/apps/dto/request';
+import { RequestTransformPipe } from '@root/apps/pipe/request.pipe';
 @ApiTags('users')
 @Controller('users')
 export class UserController {
@@ -35,7 +36,7 @@ export class UserController {
   @ApiExceptionResponse()
   async index(
     @Req() req: RequestT,
-    @Query(new QueryTransformPipe()) query: UserWhereInput,
+    @Body(new RequestTransformPipe()) query: UserIndexRequest,
     @AuthDecorator() auth: Auth,
   ): Promise<PaginatedResponse<AccountDTO>> {
     try {
@@ -53,6 +54,8 @@ export class UserController {
   @ApiExceptionResponse()
   async edit(
     @Req() req: RequestT,
+    @Body(new RequestTransformPipe())
+    body: UserUpdateRequest,
     @Param('id', ParseIntPipe) id: number,
     @AuthDecorator() auth: Auth,
   ): Promise<UserUpdateResponse> {
@@ -60,7 +63,7 @@ export class UserController {
       console.log('id', id);
       console.log('Request.users.edit', auth, auth.permissions);
 
-      const result = await this.userService.edit();
+      const result = await this.userService.edit(body);
       return result;
     } catch (e) {
       console.log(e);
